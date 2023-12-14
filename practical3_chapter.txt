@@ -1,0 +1,138 @@
+/*A book consists of chapters, chapters consist of sections and sections consist of subsections.
+Construct a tree and print the nodes. Find the time and space requirements of your method*/
+#include <iostream>
+using namespace std;
+struct node
+{
+    char name[30];
+    node *down;
+    node *next;
+    int flag;
+};
+class gll
+{
+private:
+    char ch[30];
+    node *head = NULL, *temp = NULL, *t1 = NULL;
+
+public:
+    node *create();
+    void insert_book();
+    void insert_chapter();
+    void display_book();
+};
+node *gll::create()
+{
+    node *p = new (struct node);
+    p->down = NULL;
+    p->next = NULL;
+    p->flag = 0;
+    cout << "\nEnter the name:";
+    cin >> p->name;
+    return p;
+}
+void gll::insert_book()
+{
+    if (head == NULL)
+    {
+        t1 = create();
+        head = t1;
+        cout << "\nBook inserted!\n\n";
+    }
+    else
+    {
+        cout << "\nBook already exist !!!";
+    }
+}
+void gll::insert_chapter()
+{
+    if (head == NULL)
+    {
+        cout << "\nNO BOOK EXIST PLEASE CREATE A BOOK FIRST";
+    }
+    else
+    {
+        int n;
+        cout << "\nEnter how many chapters you want to enter:";
+        cin >> n;
+        for (int i = 0; i < n; i++)
+        {
+            t1 = create();
+            if (head->flag == 0)
+            {
+                head->down = t1;
+                head->flag = 1;
+            }
+            else
+            {
+                temp = head;
+                temp = temp->down;
+                while (temp->next != NULL)
+                {
+                    temp = temp->next;
+                }
+                temp->next = t1;
+            }
+        }
+    }
+}
+void gll::display_book()
+{
+    temp = head;
+    if (head == NULL)
+    {
+        cout << "\nBOOK NOT EXIST!!\n\n";
+    }
+    else
+    {
+        cout << "NAME OF BOOK: " << temp->name;
+        if (temp->flag == 1)
+        {
+            int num = 1;
+            cout << "\nNAME OF CHAPTERS:";
+            temp = temp->down;
+            while (temp != NULL)
+            {
+                cout << "\n\t\t\t" << num << ". " << temp->name;
+                temp = temp->next;
+                num++;
+            }
+        }
+    }
+}
+int main()
+{
+    gll b;
+    int choice;
+    while (true)
+    {
+        cout << "\n*****Choices******";
+        cout << "\n1.Insert a book";
+        cout << "\n2.Insert chapter";
+        cout << "\n3.Display content of book";
+        cout << "\n4.STOP THE PROGRAM";
+        cout << "\n\nEnter your choice:";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            b.insert_book();
+            break;
+        case 2:
+            b.insert_chapter();
+            break;
+        case 3:
+            b.display_book();
+            break;
+        case 4:
+            cout << "\n\t\t\t\t\t.........................................PROGRAM IS ENDED............................................";
+            // exit(0);
+            break;
+        default:
+
+            cout << "\n\n!!!Enter right choice !!!\n\n";
+            break;
+        }
+    }
+    return 0;
+}
